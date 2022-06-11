@@ -54,15 +54,16 @@ public:
     void bfs(const vector<vector<int>>& isConnected, vector<bool>& visited, int currentNode, int n) {
         visited[currentNode] = true;
         queue<int> q;
-        q.push(n);
+        q.push(currentNode);
         while(!q.empty()) {
             int current = q.front();
             q.pop();
-            if(visited[current])
-                continue;
+            
             for(int i = 0; i < n; i ++) {
-                if(!visited[i] && isConnected[currentNode][i])
+                if(!visited[i] && isConnected[current][i]) {
                     q.push(i);
+                    visited[i] = true;
+                }
             }
         }
     }
