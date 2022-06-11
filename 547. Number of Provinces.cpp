@@ -1,5 +1,36 @@
 class Solution {
 public:
+    vector<int> pset;
+    
+    int findSet(int a) {
+        return (pset[a] == a) ? a : (pset[a] = findSet(pset[a]));
+    }
+    void unionSet(int a, int b) {
+        pset[findSet(a)] = findSet(b);
+    }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        for(int i = 0; i < n; i ++)
+            pset.push_back(i);
+        
+        for(int i = 0; i < n; i ++) {
+            for(int j = 0; j < n; j ++) {
+                if(isConnected[i][j])
+                    unionSet(i, j);
+            }
+        }
+
+        int cc = 0;
+        for(int i = 0; i < n; i ++)
+            if(pset[i] == i)
+                cc ++;
+
+        return cc;
+    }
+};
+
+class Solution {
+public:
     int findCircleNum(vector<vector<int>>& isConnected) {
         int n = isConnected.size();
         vector<bool> visited(n, false);
